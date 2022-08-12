@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,13 +27,19 @@ public class UserService {
     public User getUserByToken() {
 
         log.info("Вызвана функция getUserByToken класса UserService для осуществления поиска пользователя по токену");
-        return userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get();
+        Optional<User> optionalUser = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else throw new RuntimeException("User not found");
     }
 
     public User getUserByEmail(String email) {
 
         log.info("Вызвана функция getUserByToken класса UserService для осуществления поиска пользователя по email" + email);
-        return userRepository.findByEmail(email).get();
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else throw new RuntimeException("User not found");
     }
 
     public List<User> getAllUsers() {

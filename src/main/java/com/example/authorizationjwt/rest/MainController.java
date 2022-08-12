@@ -34,20 +34,21 @@ public class MainController {
 
     @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
     @GetMapping("/student")
-    @PreAuthorize("hasAuthority('root:student')")
+    @PreAuthorize(value = "hasAuthority('root:student')")
     @Tag(name = "The Test API")
     @Operation(summary = "Test endpoint for students and admins")
     public ResponseEntity<?> sayHelloStudent() {
 
         log.info("Вызвана функция sayHelloStudent класса MainController");
         User user = getUser().getBody();
+        assert user != null;
         String response = "Добро пожаловать, студент " + user.getFirstName() + " " + user.getLastName() + "!";
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
     @GetMapping("/teacher")
-    @PreAuthorize("hasAuthority('root:teacher')")
+    @PreAuthorize(value = "hasAuthority('root:teacher')")
     @Tag(name = "The Test API")
     @Operation(summary = "Test endpoint for teachers and admins")
     public ResponseEntity<?> sayHelloTeacher() {
@@ -60,13 +61,14 @@ public class MainController {
 
     @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
     @GetMapping("/admin")
-    @PreAuthorize("hasAuthority('root:admin')")
+    @PreAuthorize(value = "hasAuthority('root:admin')")
     @Tag(name = "The Test API")
     @Operation(summary = "Test endpoint for admins")
     public ResponseEntity<?> sayHelloAdmin() {
 
         log.info("Вызвана функция sayHelloAdmin класса MainController");
         User user = getUser().getBody();
+        assert user != null;
         String response = "Добро пожаловать, администратор " + user.getFirstName() + " " + user.getLastName() + "!";
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -84,7 +86,7 @@ public class MainController {
 
     @ApiOperation(value = "", authorizations = {@Authorization(value = "JWT")})
     @GetMapping("/users_all")
-    @PreAuthorize("hasAuthority('root:admin')")
+    @PreAuthorize(value = "hasAuthority('root:admin')")
     @Tag(name = "The Test API")
     @Operation(summary = "Get all users for admins")
     public ResponseEntity<List<User>> getAllUsers() {
