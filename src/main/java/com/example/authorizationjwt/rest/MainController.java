@@ -41,8 +41,8 @@ public class MainController {
 
         log.info("Вызвана функция sayHelloStudent класса MainController");
         User user = getUser().getBody();
-        assert user != null;
-        String response = "Добро пожаловать, студент " + user.getFirstName() + " " + user.getLastName() + "!";
+
+        String response = "Добро пожаловать, студент " + (user != null ? user.getFirstName() : null) + " " + (user != null ? user.getLastName() : null) + "!";
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -55,7 +55,7 @@ public class MainController {
 
         log.info("Вызвана функция sayHelloTeacher класса MainController");
         User user = getUser().getBody();
-        String response = "Добро пожаловать, преподаватель " + user.getFirstName() + " " + user.getLastName() + "!";
+        String response = "Добро пожаловать, преподаватель " + (user != null ? user.getFirstName() : null) + " " + (user != null ? user.getLastName() : null) + "!";
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
